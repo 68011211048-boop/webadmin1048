@@ -2,14 +2,15 @@
 /**
  * db.php — เชื่อมต่อฐานข้อมูล
  */
-$host   = 'localhost';
-$user   = 'root';
-$pass   = '';
-$dbname = 'pet_lab_db';
+$host   = getenv('DB_HOST') ?: 'localhost';
+$user   = getenv('DB_USER') ?: 'root';
+$pass   = getenv('DB_PASS') ?: '';
+$dbname = getenv('DB_NAME') ?: 'pet_lab_db';
+$port   = getenv('DB_PORT') ?: 3306;
 
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli($host, $user, $pass, $dbname, (int)$port);
 $conn->set_charset('utf8mb4');
+
 if ($conn->connect_error) {
-    die('เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' . $conn->connect_error .
-        ' (ตรวจสอบว่าได้ import pet_lab_db.sql และเปิด MySQL แล้ว)');
+    die('เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' . $conn->connect_error);
 }
