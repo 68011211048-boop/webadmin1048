@@ -1,12 +1,12 @@
 <?php
 /**
- * db.php — เชื่อมต่อฐานข้อมูล
+ * db.php — เชื่อมต่อฐานข้อมูล TiDB Cloud
  */
-$host   = getenv('DB_HOST') ?: 'localhost';
-$user   = getenv('DB_USER') ?: 'root';
-$pass   = getenv('DB_PASS') ?: '';
-$dbname = getenv('DB_NAME') ?: 'pet_lab_db';
-$port   = getenv('DB_PORT') ?: 4000;
+$host   = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com';
+$user   = '2ttpZavvinMybvY.root';
+$pass   = 'eLLk9KwH1uO58bgh';
+$dbname = 'test';
+$port   = 4000;
 
 $conn = new mysqli($host, $user, $pass, $dbname, (int)$port);
 $conn->set_charset('utf8mb4');
