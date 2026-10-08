@@ -1,6 +1,6 @@
 <?php
 /**
- * db.php — เชื่อมต่อฐานข้อมูล TiDB Cloud
+ * db.php — เชื่อมต่อฐานข้อมูล TiDB Cloud (เปิดใช้งาน SSL/TLS)
  */
 $host   = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com';
 $user   = '2ttpZavvinMybvY.root';
@@ -8,9 +8,13 @@ $pass   = 'eLLk9KwH1uO58bgh';
 $dbname = 'test';
 $port   = 4000;
 
-$conn = new mysqli($host, $user, $pass, $dbname, (int)$port);
-$conn->set_charset('utf8mb4');
+$conn = mysqli_init();
 
-if ($conn->connect_error) {
-    die('เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' . $conn->connect_error);
+// กำหนดการเชื่อมต่อแบบเข้ารหัส SSL/TLS สำหรับ TiDB Cloud
+$conn->ssl_set(NULL, NULL, NULL, NULL, NULL);
+
+if (!$conn->real_connect($host, $user, $pass, $dbname, (int)$port, NULL, MYSQLI_CLIENT_SSL)) {
+    die('เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' . mysqli_connect_error());
 }
+
+$conn->set_charset('utf8mb4');
